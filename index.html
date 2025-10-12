@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <title>Data Story Website - Option 4</title>
   <style>
     body {
       text-align: center;
       margin: 0 auto;
       max-width: 800px; /* Optional: limits the content width */
+    }
     .fade-in {
       opacity: 0;
       transition: opacity 1.5s;
@@ -14,15 +17,9 @@
       opacity: 1;
     }
   </style>
-  ...
-</head>
-
-  <meta charset="UTF-8" />
-  <title>Data Story Website - Option 4</title>
 </head>
 <body>
   <h1>Is The More Expensive Always Better?</h1>
-
   <!-- Introduction -->
   <section id="introduction">
     <h2>Introduction</h2>
@@ -32,15 +29,20 @@
       Does the price difference between brands influence customer satisfaction rankings? <br>
       In this study, we analyzed data by looking at <strong>the price</strong> and <strong>customer ranking</strong>
       to understand how pricing affects consumer perceptions and overall satisfaction.
-    </p>
-    <img src="cosmetic_brands_image.jpeg" alt="cosmetic brand image" width="600">
+  </p>
+  <!-- fade-in 이미지 코드! -->
+  <img id="cosmetic-image" class="fade-in" src="cosmetic_brands_image.jpeg" alt="cosmetic brand image" width="600">
+  <!-- 필요시 다른 내용 추가 -->
+
+  <!-- fade-in JS 코드: body 맨 끝에 추가 -->
   <script>
     window.onload = function() {
       document.getElementById('cosmetic-image').classList.add('visible');
     };
   </script>
-  </div>
-</section>
+</body>
+</html>
+
 
   <!-- Progressive Disclosure -->
   <section id="progressive-findings">
