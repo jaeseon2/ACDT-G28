@@ -59,6 +59,52 @@
   style="border: none;">
 </iframe>
 
+    import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+import statsmodels.api as sm
+    # 1. Original Model: Ranking ~ Price
+X = df['Price']
+y = df['Ranking']
+X_const = sm.add_constant(X)
+model1 = sm.OLS(y, X_const).fit()
+print(model1.summary())
+
+
+# Plot regression line
+plt.figure(figsize=(8, 5))
+sns.regplot(x='Price', y='Ranking', data=df)
+plt.title('Original Linear Regression: Ranking ~ Price')
+plt.xlabel('Price (USD)')
+plt.ylabel('Ranking (1-5)')
+plt.tight_layout()
+plt.savefig('regression_original.png')
+
+
+# 2. With Confounder: Add 'Category' as dummy variables
+X_conf = pd.get_dummies(df[['Price', 'Category']], drop_first=True)
+X_conf = sm.add_constant(X_conf)
+model2 = sm.OLS(y, X_conf).fit()
+print(model2.summary())
+
+
+# 3. With Moderator: Add interaction term between Price and Brand Type
+# Create binary variable for BrandType: 1 = Luxury, 0 = Affordable
+df['BrandType'] = df['Brand'].apply(lambda x: 1 if x in luxury_brands else 0)
+df['Interaction'] = df['Price'] * df['BrandType']
+X_mod = df[['Price', 'BrandType', 'Interaction']]
+X_mod = sm.add_constant(X_mod)
+model3 = sm.OLS(y, X_mod).fit()
+print(model3.summary())
+
+
+# 4. With Mediator: Assume 'Popularity Score' is a mediator
+# Ranking ~ Price + Popularity
+X_med = df[['Price', 'Popularity']]
+X_med = sm.add_constant(X_med)
+model4 = sm.OLS(y, X_med).fit()
+print(model4.summary())
+    
     <!-- Embedded Google Slide -->
   <section id="presentation">
     <h2>Presentation</h2>
