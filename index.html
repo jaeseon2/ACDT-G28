@@ -55,6 +55,19 @@
 </html>
 
 <!-- Progressive Disclosure -->
+<style>
+.story {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  margin-bottom: 2em;
+}
+.story.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
 <section id="progressive-findings">
 
   <h2>Stepwise Findings</h2>
@@ -69,9 +82,28 @@
     </p>
   </section>
 
-  <!-- 필요 시 추가 섹션 더 넣기 -->
-
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    console.log("스크롤 이벤트 리스너 연결됨");
+    const stories = document.querySelectorAll('.story');
+
+    function handleScroll() {
+      stories.forEach(story => {
+        const rect = story.getBoundingClientRect();
+        console.log(story.id, rect.top, window.innerHeight * 0.85);
+        if (rect.top < window.innerHeight * 0.85) {
+          story.classList.add('visible');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+  });
+</script>
+
 
   <p>
   The data was collected from an online data set platform and includes the following variables for each moisturizer product:
