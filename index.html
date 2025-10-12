@@ -6,6 +6,12 @@
       text-align: center;
       margin: 0 auto;
       max-width: 800px; /* Optional: limits the content width */
+    .fade-in {
+      opacity: 0;
+      transition: opacity 1.5s;
+    }
+    .fade-in.visible {
+      opacity: 1;
     }
   </style>
   ...
@@ -28,6 +34,11 @@
       to understand how pricing affects consumer perceptions and overall satisfaction.
     </p>
     <img src="cosmetic_brands_image.jpeg" alt="cosmetic brand image" width="600">
+  <script>
+    window.onload = function() {
+      document.getElementById('cosmetic-image').classList.add('visible');
+    };
+  </script>
   </div>
 </section>
 
