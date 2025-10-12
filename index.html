@@ -80,22 +80,38 @@
   <p>Equation: Ranking = β₀ + β₁·Price + β₂·Popularity</p>
   <p>If popularity is on the path from price to ranking, this model shows only the direct effect of price. The drop in β₁ indicates the size of the indirect (mediated) effect.</p>
 
-  <h4>Example Python Code:</h4>
-  <pre><code class="language-python">
+  <h4>Example Python Code with Explanations:</h4>
+<pre><code class="language-python">
+# Importing OLS regression from statsmodels
 import statsmodels.formula.api as smf
 
-# Original
+# Original Model: Basic linear regression
+# Checks whether price alone predicts product ranking (satisfaction score)
+# Equation: Ranking = β₀ + β₁ * Price
+# Interpretation: For every 1 USD increase in price, ranking changes by β₁
 model1 = smf.ols('Ranking ~ Price', data=df).fit()
 
-# Confounder
+# Confounder Model: Adds Category as a control variable
+# Category may influence both price and ranking (e.g., bags vs shoes)
+# Helps reduce bias in the estimate of β₁
+# Equation: Ranking = β₀ + β₁ * Price + β₂ * Category
 model2 = smf.ols('Ranking ~ Price + Category', data=df).fit()
 
-# Moderator
+# Moderator Model: Explores interaction between Price and BrandType
+# BrandType is a binary variable: 1 for luxury, 0 for affordable
+# Interaction term (Price * BrandType) tells us if price effect changes by brand type
+# Equation: Ranking = β₀ + β₁ * Price + β₂ * BrandType + β₃ * (Price * BrandType)
+# If β₃ > 0, price matters more for luxury brands
 model3 = smf.ols('Ranking ~ Price * BrandType', data=df).fit()
 
-# Mediator
+# Mediator Model: Adds Popularity as a mediator variable
+# Hypothesis: Price may increase popularity, which then influences ranking
+# This model shows the direct effect of price on ranking, excluding the mediated path
+# Equation: Ranking = β₀ + β₁ * Price + β₂ * Popularity
+# The drop in β₁ compared to model1 reveals the size of the indirect effect
 model4 = smf.ols('Ranking ~ Price + Popularity', data=df).fit()
-  </code></pre>
+</code></pre>
+
 
   <p>We also visualized these results using Seaborn (see below). Each model gives a different insight into how pricing impacts satisfaction.</p>
 </section>
