@@ -27,6 +27,9 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
     }
+     p {
+      margin-bottom: 1.5em;
+    }
   </style>
 </head>
 <body>
@@ -68,55 +71,37 @@
 }
 </style>
 
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log("스크롤 이벤트 리스너 연결됨");
-    const stories = document.querySelectorAll('.story');
-
-    function handleScroll() {
-      stories.forEach(story => {
-        const rect = story.getBoundingClientRect();
-        console.log(story.id, rect.top, window.innerHeight * 0.85);
-        if (rect.top < window.innerHeight * 0.85) {
-          story.classList.add('visible');
-        }
-      });
-    }
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-  });
-</script>
-
-<section id="progressive-findings", class="story">
+<section id="progressive-findings" class="story">
 
   <h2>Stepwise Findings</h2>
   <p>We start with hypothesis testing and move on to regression analysis.</p>
 
-  <section id="data-overview" >
-    <h2>Dataset Description</h2>
-    <p>
-      This project is based on a dataset of <strong>1472 cosmetic items</strong> with their <strong>price</strong>, <strong>ranking</strong>, and also, the division of 
-      <strong>luxury brands</strong> and <strong>non-luxury brands</strong> . 
-      The goal is to explore whether price influences customer satisfaction, as measured by product rankings.
-    </p>
-  </section>
-
 </section>
 
-
+<section id="data-overview" class="story">
+  <h2>Dataset Description</h2>
   <p>
-  The data was collected from an online data set platform and includes the following variables for each moisturizer product:
-</p>
-<ul>
-  <li><strong>Name</strong> – Product name or label (e.g., "Crème de", "Facial Tre")</li>
-  <li><strong>Brand</strong> – The name of the cosmetic brand (e.g., LA MER, SK-II, DRUNK ELEPHANT)</li>
-  <li><strong>Price</strong> – Retail price (numeric, usually in local currency or USD)</li>
-  <li><strong>Rank</strong> – Average user rating (scale: 1–5)</li>
-  <li><strong>Skin Type Columns (Dry, Normal, Oily, Sensitive)</strong> – 0/1 dummy variables indicating suitability for each skin type</li>
-  <li><strong>Brand type</strong> – "Luxury" or "Non-luxury"</li>
+    This project is based on a dataset of <strong>1472 cosmetic items</strong> with their <strong>price</strong>, <strong>ranking</strong>, and also, the division of 
+    <strong>luxury brands</strong> and <strong>non-luxury brands</strong> . 
+    The goal is to explore whether price influences customer satisfaction, as measured by product rankings.
+  </p>
+</section>
 
+<section class="story">
+  <p>
+    The data was collected from an online data set platform and includes the following variables for each moisturizer product:
+  </p>
+  <ul>
+    <li><strong>Name</strong> – Product name or label (e.g., "Crème de", "Facial Tre")</li>
+    <li><strong>Brand</strong> – The name of the cosmetic brand (e.g., LA MER, SK-II, DRUNK ELEPHANT)</li>
+    <li><strong>Price</strong> – Retail price (numeric, usually in local currency or USD)</li>
+    <li><strong>Rank</strong> – Average user rating (scale: 1–5)</li>
+    <li><strong>Skin Type Columns (Dry, Normal, Oily, Sensitive)</strong> – 0/1 dummy variables indicating suitability for each skin type</li>
+    <li><strong>Brand type</strong> – "Luxury" or "Non-luxury"</li>
   </ul>
+</section>
+
+<section class="story">
   <p>
     We intentionally balanced the dataset to include both premium and budget segments, allowing a fair comparison 
     across similar product categories.
@@ -126,15 +111,49 @@
   </p>
 </section>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  console.log("스크롤 이벤트 리스너 연결됨");
+  const stories = document.querySelectorAll('.story');
+
+  function handleScroll() {
+    stories.forEach(story => {
+      const rect = story.getBoundingClientRect();
+      console.log(story.id, rect.top, window.innerHeight * 0.85);
+      if (rect.top < window.innerHeight * 0.85) {
+        story.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+});
+</script>
+
     <!-- Add charts/images or links -->
+<style>
+.story {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  margin-bottom: 2em;
+}
+.story.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
 <iframe 
   src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS7vY-yvq9mA_wnXWeN9ZUT2lY0fahzXfZo1mk0z1jPoBun89q0reJ2o8Z-gunO2Oxl1wsl6JA9r5fD/pubhtml?widget=true&amp;headers=false" 
   width="100%" 
   height="800"
-  style="border: none;">
-</iframe>
+  style="border: none;"
+  class="story"
+></iframe>
 
-<section id="regression-models">
+<section id="regression-models" class="story">
   <h2>Regression Models: Understanding Price & Satisfaction</h2>
 
   <p>We tested four types of regression models to analyze how price affects product ranking (satisfaction):</p>
@@ -156,7 +175,7 @@
   <p>If popularity is on the path from price to ranking, this model shows only the direct effect of price. The drop in β₁ indicates the size of the indirect (mediated) effect.</p>
 
   <h4>Example Python Code with Explanations:</h4>
-<pre><code class="language-python">
+  <pre><code class="language-python">
 # Importing OLS regression from statsmodels
 import statsmodels.formula.api as smf
 
@@ -185,47 +204,95 @@ model3 = smf.ols('Ranking ~ Price * BrandType', data=df).fit()
 # Equation: Ranking = β₀ + β₁ * Price + β₂ * Popularity
 # The drop in β₁ compared to model1 reveals the size of the indirect effect
 model4 = smf.ols('Ranking ~ Price + Popularity', data=df).fit()
-</code></pre>
-
+  </code></pre>
 
   <p>We also visualized these results using Seaborn (see below). Each model gives a different insight into how pricing impacts satisfaction.</p>
 </section>
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const stories = document.querySelectorAll('.story');
+
+  function handleScroll() {
+    stories.forEach(story => {
+      const rect = story.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) {
+        story.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+});
+</script>
+
+
 
     
-    <!-- Embedded Google Slide -->
-  <section id="presentation">
+<style>
+.story {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  margin-bottom: 2em;
+}
+.story.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.iframe-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+</style>
+
+<section id="presentation" class="story">
   <h2>Presentation</h2>
   <div class="iframe-container">
     <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vSm-89j7ktd3rt3LiHjN_OlRRDILQOVQnkkQnFPjl5jCHk4OAEgfOjESR2xPTTL5x9EBNRc_sY_EuiE/pubembed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true"></iframe>
   </div>
 </section>
 
-  <!-- Downloadable Resources -->
-  <section id="resources">
-    <h2>Resources</h2>
-    <ul>
-      <li><a href="data set.xlsx" download>Raw Data (CSV)</a></li>
-      <li><a href="summary.pdf" download>Executive Summary (PDF)</a></li>
-      <li><a href="https://github.com/youruser/yourrepo">GitHub Repository</a></li>
-    </ul>
-  </section>
+<section id="resources" class="story">
+  <h2>Resources</h2>
+  <ul>
+    <li><a href="data set.xlsx" download>Raw Data (CSV)</a></li>
+    <li><a href="summary.pdf" download>Executive Summary (PDF)</a></li>
+    <li><a href="https://github.com/youruser/yourrepo">GitHub Repository</a></li>
+  </ul>
+</section>
 
-  <!-- System Maps -->
-  <section id="system-maps">
-    <h2>System Maps Comparison</h2>
-    <h3>Map A: Statistical Significance</h3>
-    <img src="mapA.png" alt="Statistical Map" width="600" />
-    <h3>Map B: Theory/Scenario</h3>
-    <img src="mapB.png" alt="Theory Map" width="600" />
-  </section>
+<section id="system-maps" class="story">
+  <h2>System Maps Comparison</h2>
+  <h3>Map A: Statistical Significance</h3>
+  <img src="mapA.png" alt="Statistical Map" width="600" />
+  <h3>Map B: Theory/Scenario</h3>
+  <img src="mapB.png" alt="Theory Map" width="600" />
+</section>
 
-  <!-- Justification Document -->
-  <section id="justification">
-    <h2>Justification</h2>
-    <p>This document explains why some variables that are not statistically significant might still matter and why ignoring them could impact policy decisions.</p>
-    <a href="justification.pdf" download>Download Justification PDF</a>
-  </section>
+<section id="justification" class="story">
+  <h2>Justification</h2>
+  <p>This document explains why some variables that are not statistically significant might still matter and why ignoring them could impact policy decisions.</p>
+  <a href="justification.pdf" download>Download Justification PDF</a>
+</section>
 
-</body>
-</html>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const stories = document.querySelectorAll('.story');
+
+  function handleScroll() {
+    stories.forEach(story => {
+      const rect = story.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.85) {
+        story.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', handleScroll);
+  handleScroll();
+});
+</script>
+
