@@ -60,27 +60,27 @@
 </iframe>
 
 <section id="regression-models">
-  <h2>📊 Regression Models: Understanding Price & Satisfaction</h2>
+  <h2>Regression Models: Understanding Price & Satisfaction</h2>
 
   <p>We tested four types of regression models to analyze how price affects product ranking (satisfaction):</p>
 
   <h3>1. Original Model</h3>
-  <p><strong>Equation:</strong> Ranking = β₀ + β₁·Price</p>
+  <p>Equation: Ranking = β₀ + β₁·Price</p>
   <p>This model shows the total effect of price on satisfaction. If β₁ > 0, then higher-priced items tend to get higher rankings.</p>
 
   <h3>2. Confounder Model</h3>
-  <p><strong>Equation:</strong> Ranking = β₀ + β₁·Price + β₂·Category</p>
+  <p>Equation: Ranking = β₀ + β₁·Price + β₂·Category</p>
   <p>Category might affect both price and ranking. Including it helps remove bias in β₁. The difference in β₁ (before and after) tells us how much the confounder matters.</p>
 
   <h3>3. Moderator Model</h3>
-  <p><strong>Equation:</strong> Ranking = β₀ + β₁·Price + β₂·BrandType + β₃·(Price × BrandType)</p>
+  <p>Equation:Ranking = β₀ + β₁·Price + β₂·BrandType + β₃·(Price × BrandType)</p>
   <p>This model checks if the price effect changes depending on the brand type (Luxury vs. Affordable). If β₃ is positive, price has a stronger effect for luxury brands.</p>
 
   <h3>4. Mediator Model</h3>
-  <p><strong>Equation:</strong> Ranking = β₀ + β₁·Price + β₂·Popularity</p>
+  <p>Equation: Ranking = β₀ + β₁·Price + β₂·Popularity</p>
   <p>If popularity is on the path from price to ranking, this model shows only the direct effect of price. The drop in β₁ indicates the size of the indirect (mediated) effect.</p>
 
-  <h4>🔎 Example Python Code:</h4>
+  <h4>Example Python Code:</h4>
   <pre><code class="language-python">
 import statsmodels.formula.api as smf
 
