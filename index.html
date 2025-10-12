@@ -15,7 +15,7 @@
   <title>Data Story Website - Option 4</title>
 </head>
 <body>
-  <h1>Does Price Affect Satisfaction?</h1>
+  <h1>Is The More Expensive Always Better?</h1>
 
   <!-- Introduction -->
   <section id="introduction">
@@ -24,7 +24,7 @@
   </section>
   <p style="font-size: 1.2rem; color: #374151; line-height: 1.6;">
       Does the price difference between brands influence customer satisfaction rankings? <br>
-      In this study, we analyzed data comparing <strong>luxury brands</strong> and <strong>low-cost brands</strong>
+      In this study, we analyzed data by looking at <strong>the price</strong> and <strong>customer ranking</strong>
       to understand how pricing affects consumer perceptions and overall satisfaction.
     </p>
     <img src="images/brands_intro.jpg" alt="Brand comparison" style="margin-top: 30px; width: 80%; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
@@ -38,26 +38,28 @@
     <section id="data-overview">
   <h2>Dataset Description</h2>
   <p>
-    This project is based on a dataset of <strong>100 fashion items</strong>, equally divided between 
-    <strong>luxury brands</strong> and <strong>affordable brands</strong> (50 samples each). 
+    This project is based on a dataset of <strong>1472 cosmetic items</strong> with their price, ranking, and also, the division of 
+    <strong>luxury brands</strong> and <strong>affordable brands</strong> . 
     The goal is to explore whether price influences customer satisfaction, as measured by product rankings.
   </p>
   <p>
-    The data was manually collected from an online fashion platform and includes the following variables for each item:
-  </p>
-  <ul>
-    <li><strong>Brand</strong> – The name of the fashion brand (e.g., Gucci, Zara)</li>
-    <li><strong>Product Name</strong> – Specific item or model name</li>
-    <li><strong>Price</strong> – Retail price in USD</li>
-    <li><strong>Ranking</strong> – User rating score (1–5)</li>
-    <li><strong>Category</strong> – Product type</li>
+  The data was collected from an online data set platform and includes the following variables for each moisturizer product:
+</p>
+<ul>
+  <li><strong>Name</strong> – Product name or label (e.g., "Crème de", "Facial Tre")</li>
+  <li><strong>Brand</strong> – The name of the cosmetic brand (e.g., LA MER, SK-II, DRUNK ELEPHANT)</li>
+  <li><strong>Price</strong> – Retail price (numeric, usually in local currency or USD)</li>
+  <li><strong>Rank</strong> – Average user rating (scale: 1–5)</li>
+  <li><strong>Skin Type Columns (Dry, Normal, Oily, Sensitive)</strong> – 0/1 dummy variables indicating suitability for each skin type</li>
+  <li><strong>Brand type</strong> – "Luxury" or "Non-luxury"</li>
+
   </ul>
   <p>
     We intentionally balanced the dataset to include both premium and budget segments, allowing a fair comparison 
     across similar product categories.
   </p>
   <p>
-    📥 <a href="data.csv" download><strong>Download data.csv</strong></a>
+    📥 <a href="data set.xlsx" download><strong>Download data.csv</strong></a>
   </p>
 </section>
 
