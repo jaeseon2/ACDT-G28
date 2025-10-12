@@ -59,51 +59,48 @@
   style="border: none;">
 </iframe>
 
-    import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-import statsmodels.api as sm
-    # 1. Original Model: Ranking ~ Price
-X = df['Price']
-y = df['Ranking']
-X_const = sm.add_constant(X)
-model1 = sm.OLS(y, X_const).fit()
-print(model1.summary())
+<section id="regression-models">
+  <h2>📊 Regression Models: Understanding Price & Satisfaction</h2>
+
+  <p>We tested four types of regression models to analyze how price affects product ranking (satisfaction):</p>
+
+  <h3>1. Original Model</h3>
+  <p><strong>Equation:</strong> Ranking = β₀ + β₁·Price</p>
+  <p>This model shows the total effect of price on satisfaction. If β₁ > 0, then higher-priced items tend to get higher rankings.</p>
+
+  <h3>2. Confounder Model</h3>
+  <p><strong>Equation:</strong> Ranking = β₀ + β₁·Price + β₂·Category</p>
+  <p>Category might affect both price and ranking. Including it helps remove bias in β₁. The difference in β₁ (before and after) tells us how much the confounder matters.</p>
+
+  <h3>3. Moderator Model</h3>
+  <p><strong>Equation:</strong> Ranking = β₀ + β₁·Price + β₂·BrandType + β₃·(Price × BrandType)</p>
+  <p>This model checks if the price effect changes depending on the brand type (Luxury vs. Affordable). If β₃ is positive, price has a stronger effect for luxury brands.</p>
+
+  <h3>4. Mediator Model</h3>
+  <p><strong>Equation:</strong> Ranking = β₀ + β₁·Price + β₂·Popularity</p>
+  <p>If popularity is on the path from price to ranking, this model shows only the direct effect of price. The drop in β₁ indicates the size of the indirect (mediated) effect.</p>
+
+  <h4>🔎 Example Python Code:</h4>
+  <pre><code class="language-python">
+import statsmodels.formula.api as smf
+
+# Original
+model1 = smf.ols('Ranking ~ Price', data=df).fit()
+
+# Confounder
+model2 = smf.ols('Ranking ~ Price + Category', data=df).fit()
+
+# Moderator
+model3 = smf.ols('Ranking ~ Price * BrandType', data=df).fit()
+
+# Mediator
+model4 = smf.ols('Ranking ~ Price + Popularity', data=df).fit()
+  </code></pre>
+
+  <p>We also visualized these results using Seaborn (see below). Each model gives a different insight into how pricing impacts satisfaction.</p>
+</section>
 
 
-# Plot regression line
-plt.figure(figsize=(8, 5))
-sns.regplot(x='Price', y='Ranking', data=df)
-plt.title('Original Linear Regression: Ranking ~ Price')
-plt.xlabel('Price (USD)')
-plt.ylabel('Ranking (1-5)')
-plt.tight_layout()
-plt.savefig('regression_original.png')
-
-
-# 2. With Confounder: Add 'Category' as dummy variables
-X_conf = pd.get_dummies(df[['Price', 'Category']], drop_first=True)
-X_conf = sm.add_constant(X_conf)
-model2 = sm.OLS(y, X_conf).fit()
-print(model2.summary())
-
-
-# 3. With Moderator: Add interaction term between Price and Brand Type
-# Create binary variable for BrandType: 1 = Luxury, 0 = Affordable
-df['BrandType'] = df['Brand'].apply(lambda x: 1 if x in luxury_brands else 0)
-df['Interaction'] = df['Price'] * df['BrandType']
-X_mod = df[['Price', 'BrandType', 'Interaction']]
-X_mod = sm.add_constant(X_mod)
-model3 = sm.OLS(y, X_mod).fit()
-print(model3.summary())
-
-
-# 4. With Mediator: Assume 'Popularity Score' is a mediator
-# Ranking ~ Price + Popularity
-X_med = df[['Price', 'Popularity']]
-X_med = sm.add_constant(X_med)
-model4 = sm.OLS(y, X_med).fit()
-print(model4.summary())
     
     <!-- Embedded Google Slide -->
   <section id="presentation">
