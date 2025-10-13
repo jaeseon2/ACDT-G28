@@ -7,7 +7,7 @@
     body {
       text-align: center;
       margin: 0 auto;
-      max-width: 800px; /* Optional: limits the content width */
+      max-width: 800px;
     }
     .fade-in {
       opacity: 0;
@@ -15,7 +15,8 @@
     }
     .fade-in.visible {
       opacity: 1;
-      .iframe-container {
+    }
+    .iframe-container {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -26,304 +27,131 @@
       max-height: 100%;
       box-shadow: 0 0 10px rgba(0,0,0,0.05);
     }
+    p {
+      margin-bottom: 2.5em;
     }
-     p {
-      margin-bottom: 6.0em;
+    .story {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+      margin-bottom: 2em;
+    }
+    .story.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    #analysis-result {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+      height: auto;
     }
   </style>
 </head>
 <body>
   <h1>Is The More Expensive Always Better?</h1>
-  <!-- Introduction -->
+
   <section id="introduction">
     <h2>Introduction</h2>
     <p>This project explores how price affects brand rank and satisfaction.</p>
-  </section>
-  <p style="font-size: 1.2rem; color: #374151; line-height: 1.6;">
+    <p style="font-size: 1.2rem; color: #374151; line-height: 1.6;">
       Does the price difference between brands influence customer satisfaction rankings? <br>
       In this study, we analyzed data by looking at <strong>the price</strong> and <strong>customer ranking</strong>
       to understand how pricing affects consumer perceptions and overall satisfaction.
-  </p>
-  <!-- fade-in 이미지 코드! -->
-  <img id="cosmetic-image" class="fade-in" src="cosmetic_brands_image.jpeg" alt="cosmetic brand image" width="600">
-  <!-- 필요시 다른 내용 추가 -->
+    </p>
+    <img id="cosmetic-image" class="fade-in" src="cosmetic_brands_image.jpeg" alt="cosmetic brand image" width="600">
+  </section>
 
-  <!-- fade-in JS 코드: body 맨 끝에 추가 -->
+  <section id="progressive-findings" class="story">
+    <h2>Stepwise Findings</h2>
+    <p>We start with hypothesis testing and move on to regression analysis.</p>
+  </section>
+
+  <section id="data-overview" class="story">
+    <h2>Dataset Description</h2>
+    <p>
+      This project is based on a dataset of <strong>1472 cosmetic items</strong> with their <strong>price</strong>, <strong>ranking</strong>, and division into 
+      <strong>luxury</strong> and <strong>non-luxury brands</strong>. The goal is to explore whether price influences satisfaction as measured by product rankings.
+    </p>
+    <p>The dataset contains:</p>
+    <table border="1" cellspacing="0" cellpadding="8" style="border-collapse: collapse; width: 100%; max-width: 800px; margin: 20px auto;">
+      <thead style="background-color: #f5f5f5;">
+        <tr>
+          <th>Variable</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Product name or label (e.g., Crème de, Facial Treatment)</td></tr>
+        <tr><td><strong>Brand</strong></td><td>Cosmetic brand (e.g., LA MER, SK-II)</td></tr>
+        <tr><td><strong>Price</strong></td><td>Retail price in USD</td></tr>
+        <tr><td><strong>Rank</strong></td><td>User rating score (1 to 5)</td></tr>
+        <tr><td><strong>Skin Type</strong></td><td>0/1 variables for Dry, Normal, Oily, Sensitive</td></tr>
+        <tr><td><strong>Brand Type</strong></td><td>"Luxury" or "Non-luxury"</td></tr>
+      </tbody>
+    </table>
+    <p>
+      We intentionally balanced the dataset to include both premium and budget segments for a fair comparison.
+    </p>
+    <p>
+      <a href="data set.xlsx" download><strong>↓ Download Dataset</strong></a>
+    </p>
+  </section>
+
+  <section id="regression-models" class="story">
+    <h2>Regression Models: Understanding Price & Satisfaction</h2>
+    <p>We tested four regression models to analyze how price affects satisfaction.</p>
+
+    <div class="iframe-container">
+      <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQDh8h2_CskEQcSs6wF9zv9OzwduttVbA89tiM58nDicoRGbluLVJLBBy1zYP5qX8PNP1uFT7G0Uh6t/pubembed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen></iframe>
+    </div>
+
+    <h3>Price-to-Ranking Calculator</h3>
+    <div style="margin: 32px auto; border: 1px solid #ddd; padding: 16px; border-radius: 8px; max-width:400px;">
+      <label>β0 (Intercept): <input id="beta0" type="number" value="3.0" step="0.01" style="width:60px;"></label><br>
+      <label>β1 (Slope): <input id="beta1" type="number" value="0.01" step="0.001" style="width:60px;"></label><br>
+      <label>Price: <input id="priceval" type="number" value="100" step="1" style="width:80px;"></label><br>
+      <button onclick="calculateRanking()" style="margin-top: 8px;">Calculate Ranking</button>
+      <p id="rankingResult" style="margin-top:10px; font-weight:bold;"></p>
+    </div>
+
+    <script>
+    function calculateRanking() {
+      const beta0 = parseFloat(document.getElementById('beta0').value);
+      const beta1 = parseFloat(document.getElementById('beta1').value);
+      const price = parseFloat(document.getElementById('priceval').value);
+      if (isNaN(beta0) || isNaN(beta1) || isNaN(price)) {
+        document.getElementById('rankingResult').innerText = 'Please enter valid numbers.';
+        return;
+      }
+      const ranking = beta0 + beta1 * price;
+      document.getElementById('rankingResult').innerText = `Predicted Ranking = ${ranking.toFixed(3)}`;
+    }
+    </script>
+  </section>
+
   <script>
-    window.onload = function() {
-      document.getElementById('cosmetic-image').classList.add('visible');
-    };
+  window.onload = function() {
+    document.getElementById('cosmetic-image').classList.add('visible');
+  };
+  document.addEventListener('DOMContentLoaded', () => {
+    const stories = document.querySelectorAll('.story');
+    function handleScroll() {
+      stories.forEach(story => {
+        const rect = story.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          story.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+  });
   </script>
+
 </body>
 </html>
 
-<!-- Progressive Disclosure -->
-<style>
-.story {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1s ease-out, transform 1s ease-out;
-  margin-bottom: 2em;
-}
-.story.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-</style>
-
-<section id="progressive-findings" class="story">
-
-  <h2>Stepwise Findings</h2>
-  <p>We start with hypothesis testing and move on to regression analysis.</p>
-
-</section>
-
-<section id="data-overview" class="story">
-  <h2>Dataset Description</h2>
-  <p>
-    This project is based on a dataset of <strong>1472 cosmetic items</strong> with their <strong>price</strong>, <strong>ranking</strong>, and also, the division of 
-    <strong>luxury brands</strong> and <strong>non-luxury brands</strong> . 
-    The goal is to explore whether price influences customer satisfaction, as measured by product rankings.
-  </p>
-</section>
-
-<section class="story">
-  <p>
-    The dataset was obtained from a public online cosmetics platform and includes detailed product-level information. The variables are as follows:
-  </p>
-
-  <table border="1" cellspacing="0" cellpadding="8" style="border-collapse: collapse; width: 100%; max-width: 800px; margin: 20px 0;">
-    <thead style="background-color: #f5f5f5;">
-      <tr>
-        <th>Variable</th>
-        <th>Description</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>Name</strong></td>
-        <td>The product name or label (e.g., <em>Crème de</em>, <em>Facial Treatment</em>)</td>
-      </tr>
-      <tr>
-        <td><strong>Brand</strong></td>
-        <td>The name of the cosmetic brand (e.g., LA MER, SK-II, DRUNK ELEPHANT)</td>
-      </tr>
-      <tr>
-        <td><strong>Price</strong></td>
-        <td>Retail price of the product (numeric value, in USD)</td>
-      </tr>
-      <tr>
-        <td><strong>Rank</strong></td>
-        <td>User rating score based on customer reviews (scale: 1 to 5)</td>
-      </tr>
-      <tr>
-        <td><strong>Skin Type</strong></td>
-        <td>Binary variables (0/1) indicating whether the product is suitable for each skin type (Dry, Normal, Oily, Sensitive)</td>
-      </tr>
-      <tr>
-        <td><strong>Brand Type</strong></td>
-        <td>Categorical variable classifying the brand as either <em>"Luxury"</em> or <em>"Non-luxury"</em></td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-
-<section class="story">
-  <p>
-    We intentionally balanced the dataset to include both premium and budget segments, allowing a fair comparison 
-    across similar product categories.
-  </p>
-  <p>
-    📥 <a href="data set.xlsx" download><strong>Download data.csv</strong></a>
-  </p>
-</section>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  console.log("스크롤 이벤트 리스너 연결됨");
-  const stories = document.querySelectorAll('.story');
-
-  function handleScroll() {
-    stories.forEach(story => {
-      const rect = story.getBoundingClientRect();
-      console.log(story.id, rect.top, window.innerHeight * 0.85);
-      if (rect.top < window.innerHeight * 0.85) {
-        story.classList.add('visible');
-      }
-    });
-  }
-
-  window.addEventListener('scroll', handleScroll);
-  handleScroll();
-});
-</script>
-<!-- 외부 위젯 예시 -->
-
-
-
-    <!-- Add charts/images or links -->
-<style>
-.story {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 1s ease-out, transform 1s ease-out;
-  margin-bottom: 2em;
-}
-.story.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-</style>
-
-
-<section id="regression-models" class="story">
-<h2>Regression Models: Understanding Price & Satisfaction</h2>
-
-<p>
-  We tested four types of regression models to analyze how price affects product ranking (satisfaction):
-</p>
- <div class="iframe-container">
-  <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQDh8h2_CskEQcSs6wF9zv9OzwduttVbA89tiM58nDicoRGbluLVJLBBy1zYP5qX8PNP1uFT7G0Uh6t/pubembed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-
-<style>
-  #analysis-result {
-    display: block;
-    margin: 0 auto;  /* 이미지 중앙 정렬 원할 경우 */
-    max-width: 100%; /* 반응형 */
-    height: auto;
-  }
-</style>
-
-<h3>1. Original Model</h3>
-<p>Equation: Ranking = β₀ + β₁·Price</p>
-<p>This model shows the total effect of price on satisfaction. If β₁ > 0, then higher-priced items tend to get higher rankings.</p>
-
-
-  <!-- Regression Calculator for Ranking = β₀ + β₁·Price -->
-<div style="margin: 32px 0; border: 1px solid #ddd; padding: 16px; border-radius: 8px; max-width:400px;">
-  <h3>Price-to-Ranking Calculator</h3>
-  <label>
-    β₀ (Intercept):
-    <input id="beta0" type="number" value="3.0" step="0.01" style="width:60px;">
-  </label>
-  <br>
-  <label>
-    β₁ (Slope):
-    <input id="beta1" type="number" value="0.01" step="0.001" style="width:60px;">
-  </label>
-  <br>
-  <label>
-    Price:
-    <input id="priceval" type="number" value="100" step="1" style="width:80px;">
-  </label>
-  <br>
-  <button onclick="calculateRanking()" style="margin-top: 8px;">Calculate Ranking</button>
-  <p id="rankingResult" style="margin-top:10px; font-weight:bold;"></p>
-</div>
-
-<script>
-function calculateRanking() {
-  const beta0 = parseFloat(document.getElementById('beta0').value);
-  const beta1 = parseFloat(document.getElementById('beta1').value);
-  const price = parseFloat(document.getElementById('priceval').value);
-  if (isNaN(beta0) || isNaN(beta1) || isNaN(price)) {
-    document.getElementById('rankingResult').innerText = 'Please enter valid numbers.';
-    return;
-  }
-  const ranking = beta0 + beta1 * price;
-  document.getElementById('rankingResult').innerText =
-    `Predicted Ranking = ${ranking.toFixed(3)}`;
-}
-</script>
-
-<section class="story-section" style="line-height: 1.7; font-size: 16px; max-width: 900px; margin: auto; padding: 30px 0;">
-
-  <h2>System Map: Confounders, Moderators, and Mediators</h2>
-
-  <h3 style="margin-top: 40px;">Model 2: Confounder Model</h3>
-  <p>
-    This model includes <strong>Category</strong> as a potential confounder. Since category type (e.g., skincare, makeup) may influence both price and satisfaction, omitting it would bias the estimated effect of price.
-  </p>
-  <table border="1" cellspacing="0" cellpadding="10" style="border-collapse: collapse; width: 100%; margin-bottom: 20px;">
-    <thead style="background-color: #f9f9f9;">
-      <tr>
-        <th>Equation</th>
-        <th>Interpretation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Ranking = β₀ + β₁·Price + β₂·Category</td>
-        <td>
-          Including category controls for product type. A change in β₁ (compared to the original model) reflects how much category confounded the relationship.
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3 style="margin-top: 40px;">Model 3: Moderator Model</h3>
-  <p>
-    This model tests whether the effect of price on satisfaction changes based on <strong>Brand Type</strong> (Luxury vs. Non-luxury). This interaction is modeled through an interaction term.
-  </p>
-  <table border="1" cellspacing="0" cellpadding="10" style="border-collapse: collapse; width: 100%; margin-bottom: 20px;">
-    <thead style="background-color: #f9f9f9;">
-      <tr>
-        <th>Equation</th>
-        <th>Interpretation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Ranking = β₀ + β₁·Price + β₂·BrandType + β₃·(Price × BrandType)</td>
-        <td>
-          If β₃ > 0, the effect of price is stronger for luxury brands. This suggests a moderation effect depending on brand category.
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h3 style="margin-top: 40px;">Model 4: Mediator Model</h3>
-  <p>
-    In this model, <strong>Popularity</strong> is treated as a mediator. Price may increase popularity, and popularity in turn influences ranking. By including popularity, we isolate the <strong>direct effect</strong> of price.
-  </p>
-  <table border="1" cellspacing="0" cellpadding="10" style="border-collapse: collapse; width: 100%; margin-bottom: 20px;">
-    <thead style="background-color: #f9f9f9;">
-      <tr>
-        <th>Equation</th>
-        <th>Interpretation</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Ranking = β₀ + β₁·Price + β₂·Popularity</td>
-        <td>
-          A large reduction in β₁ compared to the original model would indicate that a significant portion of the price effect is mediated through popularity.
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <h4 style="margin-top: 50px;">Example Python Code (Statsmodels OLS Regression)</h4>
-  <pre><code class="language-python">
-import statsmodels.formula.api as smf
-
-# Model 1: Basic Regression (Price Only)
-model1 = smf.ols('Ranking ~ Price', data=df).fit()
-
-# Model 2: Confounder - Adding Category
-model2 = smf.ols('Ranking ~ Price + Category', data=df).fit()
-
-# Model 3: Moderator - Interaction with BrandType
-model3 = smf.ols('Ranking ~ Price * BrandType', data=df).fit()
-
-# Model 4: Mediator - Controlling for Popularity
-model4 = smf.ols('Ranking ~ Price + Popularity', data=df).fit()
-  </code></pre>
-
-  <p style="margin-top: 20px;">
-    These models were implemented using <strong>Python's Statsmodels library</strong>. Each reveals a different layer in the relationship between price and satisfaction, depending on whether external variables are included or interacted.
-  <
 
 
 <script>
