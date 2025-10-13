@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <tr>
         <td>Ranking = β₀ + β₁·Price + β₂·BrandType + β₃·(Price × BrandType)</td>
         <td>
-          <strong>Brand Type</strong> moderates the relationship between Price and Ranking.  
+          <strong>Brand Type</strong> acts as a comfounder in the relationship between Price and Ranking.
           If β₃ > 0, the effect of Price is stronger for luxury brands.  
           This interaction term reveals conditional effects that depend on brand category.
         </td>
@@ -250,11 +250,12 @@ document.addEventListener('DOMContentLoaded', () => {
     </thead>
     <tbody>
       <tr>
-        <td>Ranking = β₀ + β₁·Price + β₂·Popularity</td>
+        <td>Ranking = β₀ + β₁·Price + β₂·Normal</td>
         <td>
-          <strong>Popularity</strong> acts as a mediator in the relationship between Price and Ranking.  
+          <strong>Normal</strong> acts as a moderator in the relationship between Price and Ranking.  
+          This model means that this product is not for specific skin types.
           This model isolates the <strong>direct effect</strong> of Price.  
-          A substantial drop in β₁ compared to the original model suggests an indirect effect via Popularity.
+          A substantial drop in β₁ compared to the original model suggests an indirect effect via Normal.
         </td>
       </tr>
     </tbody>
