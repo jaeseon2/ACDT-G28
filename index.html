@@ -195,17 +195,42 @@ function calculateRanking() {
 }
 </script>
 
-  <h3>2. Confounder Model</h3>
-  <p>Equation: Ranking = β₀ + β₁·Price + β₂·Category</p>
-  <p>Category might affect both price and ranking. Including it helps remove bias in β₁. The difference in β₁ (before and after) tells us how much the confounder matters.</p>
+  <h2>System Map: Confounders, Moderators, and Mediators</h2>
+<img src="your_image_path.jpg" alt="System Map" width="600"/>
 
-  <h3>3. Moderator Model</h3>
-  <p>Equation:Ranking = β₀ + β₁·Price + β₂·BrandType + β₃·(Price × BrandType)</p>
-  <p>This model checks if the price effect changes depending on the brand type (Luxury vs. Affordable). If β₃ is positive, price has a stronger effect for luxury brands.</p>
+<h3>Model 2: Confounder Model</h3>
+<pre><code class="language-python">
+# Equation:
+# Ranking = β₀ + β₁·Price + β₂·Category
 
-  <h3>4. Mediator Model</h3>
-  <p>Equation: Ranking = β₀ + β₁·Price + β₂·Popularity</p>
-  <p>If popularity is on the path from price to ranking, this model shows only the direct effect of price. The drop in β₁ indicates the size of the indirect (mediated) effect.</p>
+# Interpretation:
+# 'Category' affects both Price and Satisfaction (Ranking), so it's a confounder.
+# Including it removes bias in β₁ (the effect of Price on Ranking).
+# The difference in β₁ before and after adding Category shows the confounding strength.
+</code></pre>
+
+<h3>Model 3: Moderator Model</h3>
+<pre><code class="language-python">
+# Equation:
+# Ranking = β₀ + β₁·Price + β₂·Normal + β₃·(Price × Normal)
+
+# Interpretation:
+# 'Normal' is a moderator — it changes the strength of Price’s effect on Ranking.
+# If β₃ > 0, the influence of Price on Ranking is stronger when Normal is higher.
+# For example, luxury brands may show stronger effects than everyday brands.
+</code></pre>
+
+<h3>Model 4: Mediator Model</h3>
+<pre><code class="language-python">
+# Equation:
+# Ranking = β₀ + β₁·Price + β₂·Popularity
+
+# Interpretation:
+# If Price → Popularity → Ranking, then Popularity is a mediator.
+# This model isolates the direct effect of Price.
+# A large drop in β₁ (compared to Model 1) suggests a strong indirect effect via Popularity.
+</code></pre>
+
 
   <h4>Example Python Code with Explanations:</h4>
   <pre><code class="language-python">
