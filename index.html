@@ -89,17 +89,45 @@
 
 <section class="story">
   <p>
-    The data was collected from an online data set platform and includes the following variables for each cosmetic product:
+    The dataset was obtained from a public online cosmetics platform and includes detailed product-level information. The variables are as follows:
   </p>
-  <ul>
-    <li><strong>Name</strong> – Product name or label (e.g., "Crème de", "Facial Tre")</li>
-    <li><strong>Brand</strong> – The name of the cosmetic brand (e.g., LA MER, SK-II, DRUNK ELEPHANT)</li>
-    <li><strong>Price</strong> – Retail price (numeric, usually in local currency or USD)</li>
-    <li><strong>Rank</strong> – Average user rating (scale: 1–5)</li>
-    <li><strong>Skin Type Columns (Dry, Normal, Oily, Sensitive)</strong> – 0/1 dummy variables indicating suitability for each skin type</li>
-    <li><strong>Brand type</strong> – "Luxury" or "Non-luxury"</li>
-  </ul>
+
+  <table border="1" cellspacing="0" cellpadding="8" style="border-collapse: collapse; width: 100%; max-width: 800px; margin: 20px 0;">
+    <thead style="background-color: #f5f5f5;">
+      <tr>
+        <th>Variable</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Name</strong></td>
+        <td>The product name or label (e.g., <em>Crème de</em>, <em>Facial Treatment</em>)</td>
+      </tr>
+      <tr>
+        <td><strong>Brand</strong></td>
+        <td>The name of the cosmetic brand (e.g., LA MER, SK-II, DRUNK ELEPHANT)</td>
+      </tr>
+      <tr>
+        <td><strong>Price</strong></td>
+        <td>Retail price of the product (numeric value, in USD)</td>
+      </tr>
+      <tr>
+        <td><strong>Rank</strong></td>
+        <td>User rating score based on customer reviews (scale: 1 to 5)</td>
+      </tr>
+      <tr>
+        <td><strong>Skin Type</strong></td>
+        <td>Binary variables (0/1) indicating whether the product is suitable for each skin type (Dry, Normal, Oily, Sensitive)</td>
+      </tr>
+      <tr>
+        <td><strong>Brand Type</strong></td>
+        <td>Categorical variable classifying the brand as either <em>"Luxury"</em> or <em>"Non-luxury"</em></td>
+      </tr>
+    </tbody>
+  </table>
 </section>
+
 
 <section class="story">
   <p>
