@@ -237,76 +237,94 @@ function calculateRanking() {
 }
 </script>
 
+<section class="story-section" style="line-height: 1.7; font-size: 16px; max-width: 900px; margin: auto; padding: 30px 0;">
+
   <h2>System Map: Confounders, Moderators, and Mediators</h2>
 
-<h3>Model 2: Confounder Model</h3>
-<pre><code class="language-python">
-# Equation:
-# Ranking = β₀ + β₁·Price + β₂·Category
+  <h3 style="margin-top: 40px;">Model 2: Confounder Model</h3>
+  <p>
+    This model includes <strong>Category</strong> as a potential confounder. Since category type (e.g., skincare, makeup) may influence both price and satisfaction, omitting it would bias the estimated effect of price.
+  </p>
+  <table border="1" cellspacing="0" cellpadding="10" style="border-collapse: collapse; width: 100%; margin-bottom: 20px;">
+    <thead style="background-color: #f9f9f9;">
+      <tr>
+        <th>Equation</th>
+        <th>Interpretation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ranking = β₀ + β₁·Price + β₂·Category</td>
+        <td>
+          Including category controls for product type. A change in β₁ (compared to the original model) reflects how much category confounded the relationship.
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-# Interpretation:
-# 'Category' affects both Price and Satisfaction (Ranking), so it's a confounder.
-# Including it removes bias in β₁ (the effect of Price on Ranking).
-# The difference in β₁ before and after adding Category shows the confounding strength.
-</code></pre>
+  <h3 style="margin-top: 40px;">Model 3: Moderator Model</h3>
+  <p>
+    This model tests whether the effect of price on satisfaction changes based on <strong>Brand Type</strong> (Luxury vs. Non-luxury). This interaction is modeled through an interaction term.
+  </p>
+  <table border="1" cellspacing="0" cellpadding="10" style="border-collapse: collapse; width: 100%; margin-bottom: 20px;">
+    <thead style="background-color: #f9f9f9;">
+      <tr>
+        <th>Equation</th>
+        <th>Interpretation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ranking = β₀ + β₁·Price + β₂·BrandType + β₃·(Price × BrandType)</td>
+        <td>
+          If β₃ > 0, the effect of price is stronger for luxury brands. This suggests a moderation effect depending on brand category.
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-<h3>Model 3: Moderator Model</h3>
-<pre><code class="language-python">
-# Equation:
-# Ranking = β₀ + β₁·Price + β₂·Normal + β₃·(Price × Normal)
+  <h3 style="margin-top: 40px;">Model 4: Mediator Model</h3>
+  <p>
+    In this model, <strong>Popularity</strong> is treated as a mediator. Price may increase popularity, and popularity in turn influences ranking. By including popularity, we isolate the <strong>direct effect</strong> of price.
+  </p>
+  <table border="1" cellspacing="0" cellpadding="10" style="border-collapse: collapse; width: 100%; margin-bottom: 20px;">
+    <thead style="background-color: #f9f9f9;">
+      <tr>
+        <th>Equation</th>
+        <th>Interpretation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ranking = β₀ + β₁·Price + β₂·Popularity</td>
+        <td>
+          A large reduction in β₁ compared to the original model would indicate that a significant portion of the price effect is mediated through popularity.
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
-# Interpretation:
-# 'Normal' is a moderator — it changes the strength of Price’s effect on Ranking.
-# If β₃ > 0, the influence of Price on Ranking is stronger when Normal is higher.
-# For example, luxury brands may show stronger effects than everyday brands.
-</code></pre>
-
-<h3>Model 4: Mediator Model</h3>
-<pre><code class="language-python">
-# Equation:
-# Ranking = β₀ + β₁·Price + β₂·Popularity
-
-# Interpretation:
-# If Price → Popularity → Ranking, then Popularity is a mediator.
-# This model isolates the direct effect of Price.
-# A large drop in β₁ (compared to Model 1) suggests a strong indirect effect via Popularity.
-</code></pre>
-
-
-  <h4>Example Python Code with Explanations:</h4>
+  <h4 style="margin-top: 50px;">Example Python Code (Statsmodels OLS Regression)</h4>
   <pre><code class="language-python">
-# Importing OLS regression from statsmodels
 import statsmodels.formula.api as smf
 
-# Original Model: Basic linear regression
-# Checks whether price alone predicts product ranking (satisfaction score)
-# Equation: Ranking = β₀ + β₁ * Price
-# Interpretation: For every 1 USD increase in price, ranking changes by β₁
+# Model 1: Basic Regression (Price Only)
 model1 = smf.ols('Ranking ~ Price', data=df).fit()
 
-# Confounder Model: Adds Category as a control variable
-# Category may influence both price and ranking (e.g., bags vs shoes)
-# Helps reduce bias in the estimate of β₁
-# Equation: Ranking = β₀ + β₁ * Price + β₂ * Category
+# Model 2: Confounder - Adding Category
 model2 = smf.ols('Ranking ~ Price + Category', data=df).fit()
 
-# Moderator Model: Explores interaction between Price and BrandType
-# BrandType is a binary variable: 1 for luxury, 0 for affordable
-# Interaction term (Price * BrandType) tells us if price effect changes by brand type
-# Equation: Ranking = β₀ + β₁ * Price + β₂ * BrandType + β₃ * (Price * BrandType)
-# If β₃ > 0, price matters more for luxury brands
+# Model 3: Moderator - Interaction with BrandType
 model3 = smf.ols('Ranking ~ Price * BrandType', data=df).fit()
 
-# Mediator Model: Adds Popularity as a mediator variable
-# Hypothesis: Price may increase popularity, which then influences ranking
-# This model shows the direct effect of price on ranking, excluding the mediated path
-# Equation: Ranking = β₀ + β₁ * Price + β₂ * Popularity
-# The drop in β₁ compared to model1 reveals the size of the indirect effect
+# Model 4: Mediator - Controlling for Popularity
 model4 = smf.ols('Ranking ~ Price + Popularity', data=df).fit()
   </code></pre>
 
-  <p>We also visualized these results using Seaborn (see below). Each model gives a different insight into how pricing impacts satisfaction.</p>
-</section>
+  <p style="margin-top: 20px;">
+    These models were implemented using <strong>Python's Statsmodels library</strong>. Each reveals a different layer in the relationship between price and satisfaction, depending on whether external variables are included or interacted.
+  <
+
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
