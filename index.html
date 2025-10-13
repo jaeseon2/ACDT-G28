@@ -131,24 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <!-- 외부 위젯 예시 -->
-<script src="https://linangdata.com/calculatorEmbed/linangcalc.js"></script>
-<div style="width:380px;height:350px;margin-bottom:60px;">
-  <iframe id="linangcalc" src="https://linangdata.com/calculatorEmbed/embeddable.html"
-  width="380" height="350"></iframe>
-</div>
 
 
-<!-- 직접 구현 예시: 평균 계산기 -->
-<input id="numInput" type="text" placeholder="숫자,쉼표로 입력">
-<button onclick="calculateMean()">평균 계산</button>
-<p id="meanResult"></p>
-<script>
-function calculateMean() {
-  const nums = document.getElementById('numInput').value.split(',').map(Number);
-  const mean = nums.reduce((a,b)=>a+b,0)/nums.length;
-  document.getElementById('meanResult').innerText = '평균: '+mean;
-}
-</script>
 
     <!-- Add charts/images or links -->
 <style>
@@ -173,6 +157,43 @@ function calculateMean() {
   <h3>1. Original Model</h3>
   <p>Equation: Ranking = β₀ + β₁·Price</p>
   <p>This model shows the total effect of price on satisfaction. If β₁ > 0, then higher-priced items tend to get higher rankings.</p>
+
+  <!-- Regression Calculator for Ranking = β₀ + β₁·Price -->
+<div style="margin: 32px 0; border: 1px solid #ddd; padding: 16px; border-radius: 8px; max-width:400px;">
+  <h3>Price-to-Ranking Calculator</h3>
+  <label>
+    β₀ (Intercept):
+    <input id="beta0" type="number" value="3.0" step="0.01" style="width:60px;">
+  </label>
+  <br>
+  <label>
+    β₁ (Slope):
+    <input id="beta1" type="number" value="0.01" step="0.001" style="width:60px;">
+  </label>
+  <br>
+  <label>
+    Price:
+    <input id="priceval" type="number" value="100" step="1" style="width:80px;">
+  </label>
+  <br>
+  <button onclick="calculateRanking()" style="margin-top: 8px;">Calculate Ranking</button>
+  <p id="rankingResult" style="margin-top:10px; font-weight:bold;"></p>
+</div>
+
+<script>
+function calculateRanking() {
+  const beta0 = parseFloat(document.getElementById('beta0').value);
+  const beta1 = parseFloat(document.getElementById('beta1').value);
+  const price = parseFloat(document.getElementById('priceval').value);
+  if (isNaN(beta0) || isNaN(beta1) || isNaN(price)) {
+    document.getElementById('rankingResult').innerText = 'Please enter valid numbers.';
+    return;
+  }
+  const ranking = beta0 + beta1 * price;
+  document.getElementById('rankingResult').innerText =
+    `Predicted Ranking = ${ranking.toFixed(3)}`;
+}
+</script>
 
   <h3>2. Confounder Model</h3>
   <p>Equation: Ranking = β₀ + β₁·Price + β₂·Category</p>
