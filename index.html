@@ -302,16 +302,31 @@ model4 = smf.ols('Ranking ~ Price + Normal', data=df).fit()
   <img src="system_mapA.png" alt="Statistical Map" width="600" />
   <h3>Map B: Theory/Scenario</h3>
   <img src="system_mapB.png" alt="Theory Map" width="600" />
-  <p>
-    Hidden variables in the system map B which is not identified in the system map A are quality, size, and advertising. 
-    Quality is a hidden variable because it is impossible to quanitfy product quality. 
-    Quality act as a confounder by both influencing price and satisfaction. 
-    Size or volume can cause effect to price because equal product with different size have different price. 
-    Advertising is a hidden variable that is not shown in the dataset which are influenced by various variables. 
-    Advertising depends on the brand because the cosmetics comapnies have different advertisement strategy, and also amount of money spent for commercials varies by companies. 
-    Advertising influence satisfaction by forming a image by the celebrity in the commercial. 
-    Also, high advertisement fee cause companies to higher the price of their cosmetics.
-  </p>
+  <h2>Hidden Variables</h2>
+  <p>
+    System Map B includes several hidden variables not identified in System Map A. These hidden variables—<strong>quality</strong>, <strong>size</strong>, and <strong>advertising</strong>—play a crucial role in influencing other factors such as price and satisfaction.
+  </p>
+
+  <h3>Quality</h3>
+  <p>
+    Quality is considered a hidden variable because it cannot be easily quantified. It acts as a <em>confounder</em>, affecting both <strong>price</strong> and <strong>customer satisfaction</strong>. Higher quality often leads to higher prices and greater satisfaction.
+  </p>
+
+  <h3>Size (Volume)</h3>
+  <p>
+    Size or volume influences price directly. Even for products of equal type or category, different sizes can result in different pricing structures, making size a key hidden factor.
+  </p>
+
+  <h3>Advertising</h3>
+  <p>
+    Advertising is another hidden variable not shown in the dataset, yet influenced by various factors:
+  </p>
+  <ul>
+    <li>It depends on the <strong>brand</strong>, as each company follows a unique advertising strategy.</li>
+    <li>The <strong>amount spent</strong> on commercials varies across companies.</li>
+    <li>Celebrity endorsements in ads can influence <strong>customer satisfaction</strong> by shaping brand perception.</li>
+    <li>High advertising costs often lead to <strong>higher product prices</strong> to recover marketing expenses.</li>
+  </ul>
 </section>
 
 <section id="resources" class="story">
