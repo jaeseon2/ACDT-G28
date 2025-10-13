@@ -193,6 +193,99 @@ document.addEventListener('DOMContentLoaded', () => {
 }
 </style>
 
+<section id="system-map" class="story" style="line-height:1.7; font-size:16px; max-width:900px; margin:auto; padding:40px 0;">
+
+  <h2>System Map: Confounders, Moderators, and Mediators</h2>
+
+  <!-- Confounder Model -->
+  <h3 style="margin-top:40px;">Model 2: Confounder Model</h3>
+  <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%; margin:16px 0;">
+    <thead style="background-color:#f5f5f5;">
+      <tr>
+        <th>Equation</th>
+        <th>Interpretation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ranking = β₀ + β₁·Price + β₂·Category</td>
+        <td>
+          <strong>Category</strong> may influence both <strong>Price</strong> and <strong>Ranking</strong>.  
+          Including this variable removes potential bias in β₁.  
+          The difference in β₁ before and after adding Category indicates the confounding effect.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Moderator Model -->
+  <h3 style="margin-top:40px;">Model 3: Moderator Model</h3>
+  <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%; margin:16px 0;">
+    <thead style="background-color:#f5f5f5;">
+      <tr>
+        <th>Equation</th>
+        <th>Interpretation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ranking = β₀ + β₁·Price + β₂·BrandType + β₃·(Price × BrandType)</td>
+        <td>
+          <strong>Brand Type</strong> moderates the relationship between Price and Ranking.  
+          If β₃ > 0, the effect of Price is stronger for luxury brands.  
+          This interaction term reveals conditional effects that depend on brand category.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Mediator Model -->
+  <h3 style="margin-top:40px;">Model 4: Mediator Model</h3>
+  <table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%; margin:16px 0;">
+    <thead style="background-color:#f5f5f5;">
+      <tr>
+        <th>Equation</th>
+        <th>Interpretation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ranking = β₀ + β₁·Price + β₂·Popularity</td>
+        <td>
+          <strong>Popularity</strong> acts as a mediator in the relationship between Price and Ranking.  
+          This model isolates the <strong>direct effect</strong> of Price.  
+          A substantial drop in β₁ compared to the original model suggests an indirect effect via Popularity.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4 style="margin-top:50px;">Example Python Code (Statsmodels OLS Regression)</h4>
+  <pre><code class="language-python">
+import statsmodels.formula.api as smf
+
+# Model 1: Basic Regression (Price Only)
+model1 = smf.ols('Ranking ~ Price', data=df).fit()
+
+# Model 2: Confounder - Adding Category
+model2 = smf.ols('Ranking ~ Price + Category', data=df).fit()
+
+# Model 3: Moderator - Interaction with BrandType
+model3 = smf.ols('Ranking ~ Price * BrandType', data=df).fit()
+
+# Model 4: Mediator - Controlling for Popularity
+model4 = smf.ols('Ranking ~ Price + Popularity', data=df).fit()
+  </code></pre>
+
+  <p style="margin-top:20px;">
+    These regression models were estimated using <strong>Python's Statsmodels library</strong>.  
+    Each model provides a different perspective on how <strong>Price</strong> influences <strong>Satisfaction</strong>,  
+    depending on whether confounding, moderating, or mediating variables are included.
+  </p>
+
+</section>
+
+
 <section id="Viusalization" class="story">
   <h2>Visualization</h2>
   <div class="iframe-container">
