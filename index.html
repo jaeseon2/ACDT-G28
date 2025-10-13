@@ -274,8 +274,8 @@ model2 = smf.ols('Ranking ~ Price + Category', data=df).fit()
 # Model 3: Moderator - Interaction with BrandType
 model3 = smf.ols('Ranking ~ Price * BrandType', data=df).fit()
 
-# Model 4: Mediator - Controlling for Popularity
-model4 = smf.ols('Ranking ~ Price + Popularity', data=df).fit()
+# Model 4: Mediator - Controlling for Normal
+model4 = smf.ols('Ranking ~ Price + Normal', data=df).fit()
   </code></pre>
 
   <p style="margin-top:20px;">
