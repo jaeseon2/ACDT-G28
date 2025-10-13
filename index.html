@@ -273,10 +273,10 @@ model1 = smf.ols('Ranking ~ Price', data=df).fit()
 # Model 2: Confounder - Adding Category
 model2 = smf.ols('Ranking ~ Price + Category', data=df).fit()
 
-# Model 3: Moderator - Interaction with BrandType
+# Model 3: Confounder - Interaction with BrandType
 model3 = smf.ols('Ranking ~ Price * BrandType', data=df).fit()
 
-# Model 4: Mediator - Controlling for Normal
+# Model 4: Moderator - Controlling for Normal
 model4 = smf.ols('Ranking ~ Price + Normal', data=df).fit()
   </code></pre>
 
