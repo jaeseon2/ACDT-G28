@@ -154,6 +154,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <p>We tested four types of regression models to analyze how price affects product ranking (satisfaction):</p>
 
+  <img id="analysis-result" class="fade-in" src="Regression_analysis_results.png" alt="analysis result" width="600">
+  <!-- 필요시 다른 내용 추가 -->
+
+  <!-- fade-in JS 코드: body 맨 끝에 추가 -->
+  <script>
+    window.onload = function() {
+      document.getElementById('cosmetic-image').classList.add('visible');
+    };
+  </script>
+
   <h3>1. Original Model</h3>
   <p>Equation: Ranking = β₀ + β₁·Price</p>
   <p>This model shows the total effect of price on satisfaction. If β₁ > 0, then higher-priced items tend to get higher rankings.</p>
