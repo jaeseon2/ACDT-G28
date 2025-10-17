@@ -253,7 +253,7 @@
     </tr>
   </tbody>
 </table>
-ice on satisfaction. If β₁ > 0, then higher-priced items tend to get higher rankings.</p>
+
     <h3>Price-to-Ranking Calculator</h3>
     <img src="Calculator image.jpeg" alt="Calculator image" width="100" />
     <div style="margin: 32px auto; border: 1px solid #ddd; padding: 16px; border-radius: 8px; max-width:400px;">
@@ -450,31 +450,46 @@ model4 = smf.ols('Ranking ~ Price + Normal', data=df).fit()
   <img src="system_mapA.png" alt="Statistical Map" width="600" />
   <h3>Map B: Theory/Scenario</h3>
   <img src="system_mapB.png" alt="Theory Map" width="600" />
-  <h2>Hidden Variables</h2>
-  <p>
-    System Map B includes several hidden variables not identified in System Map A. These hidden variables—<strong>quality</strong>, <strong>size</strong>, and <strong>advertising</strong>—play a crucial role in influencing other factors such as price and satisfaction.
+  <section id="hidden-variables" style="max-width: 900px; margin: 3em auto; font-family: 'Segoe UI', sans-serif; color: #222;">
+  <h2 style="text-align: center; font-size: 1.8em; margin-bottom: 1em; border-bottom: 2px solid #ccc; padding-bottom: 0.5em;">
+    Hidden Variables (System Map B)
+  </h2>
+
+  <p style="margin-bottom: 2em;">
+    System Map B introduces several <strong>latent (unobserved)</strong> variables that were not explicitly included in System Map A but significantly influence observed relationships. These variables—<strong>Quality</strong>, <strong>Size</strong>, and <strong>Advertising</strong>—affect both independent and dependent variables such as <em>Price</em> and <em>Satisfaction</em>, potentially introducing bias if left uncontrolled.
   </p>
 
-  <h3>Quality</h3>
-  <p>
-    Quality is considered a hidden variable because it cannot be easily quantified. It acts as a <em>confounder</em>, affecting both <strong>price</strong> and <strong>customer satisfaction</strong>. Higher quality often leads to higher prices and greater satisfaction.
-  </p>
+  <!-- Quality -->
+  <div style="background: #fdfdfd; border: 1px solid #ddd; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+    <h3 style="margin-top: 0; color: #0055a5;">1. Quality (Confounder)</h3>
+    <p><strong>Definition:</strong> The intrinsic product standard that directly influences both price and customer satisfaction.</p>
+    <p><strong>Confounding Role:</strong> Higher quality often justifies higher prices and also enhances perceived satisfaction, thus potentially inflating the observed effect of price on satisfaction.</p>
+    <p><strong>Measurement Challenge:</strong> Difficult to quantify from rating data alone; typically inferred from expert reviews or long-term brand reputation.</p>
+  </div>
 
-  <h3>Size (Volume)</h3>
-  <p>
-    Size or volume influences price directly. Even for products of equal type or category, different sizes can result in different pricing structures, making size a key hidden factor.
-  </p>
+  <!-- Size -->
+  <div style="background: #fdfdfd; border: 1px solid #ddd; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+    <h3 style="margin-top: 0; color: #0055a5;">2. Size (Volume)</h3>
+    <p><strong>Definition:</strong> The physical quantity or volume of the product.</p>
+    <p><strong>Effect Pathway:</strong> Directly affects product price even within the same category. Larger sizes often come at higher prices, skewing simple price-based comparisons.</p>
+    <p><strong>Implication:</strong> Without accounting for volume, price alone may be a misleading proxy for value or quality.</p>
+  </div>
 
-  <h3>Advertising</h3>
-  <p>
-    Advertising is another hidden variable not shown in the dataset, yet influenced by various factors:
-  </p>
-  <ul>
-    <li>It depends on the <strong>brand</strong>, as each company follows a unique advertising strategy.</li>
-    <li>The <strong>amount spent</strong> on commercials varies across companies.</li>
-    <li>Celebrity endorsements in ads can influence <strong>customer satisfaction</strong> by shaping brand perception.</li>
-    <li>High advertising costs often lead to <strong>higher product prices</strong> to recover marketing expenses.</li>
-  </ul>
+  <!-- Advertising -->
+  <div style="background: #fdfdfd; border: 1px solid #ddd; padding: 20px; border-radius: 10px;">
+    <h3 style="margin-top: 0; color: #0055a5;">3. Advertising (Latent Influencer)</h3>
+    <p><strong>Definition:</strong> Promotional efforts undertaken by brands to influence customer perception and behavior.</p>
+    <p><strong>Multifaceted Impact:</strong></p>
+    <ul style="margin-left: 1em; line-height: 1.7;">
+      <li><strong>Brand Strategy:</strong> Different companies invest differently in advertising intensity and tone.</li>
+      <li><strong>Marketing Budget:</strong> Spending levels directly affect product visibility and consumer trust.</li>
+      <li><strong>Celebrity Endorsements:</strong> Shape customer expectations and brand image, thereby indirectly influencing satisfaction scores.</li>
+      <li><strong>Cost Recovery:</strong> High advertising expenditure is often passed on to consumers via increased prices.</li>
+    </ul>
+    <p><strong>Data Limitation:</strong> Advertising effort is typically not captured in product review datasets, making it a critical hidden driver of perceived value.</p>
+  </div>
+</section>
+
 </section>
 
 <section id="social-impact" style="max-width: 800px; margin: 50px auto; padding: 20px;">
