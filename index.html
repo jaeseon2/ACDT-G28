@@ -233,9 +233,27 @@
     <div class="iframe-container">
       <iframe src="https://docs.google.com/presentation/d/e/2PACX-1vQDh8h2_CskEQcSs6wF9zv9OzwduttVbA89tiM58nDicoRGbluLVJLBBy1zYP5qX8PNP1uFT7G0Uh6t/pubembed?start=true&loop=true&delayms=3000" frameborder="0" width="960" height="569" allowfullscreen></iframe>
     </div>
-<h3>1. Original Model</h3>
-<p>Equation: Ranking = β₀ + β₁·Price</p>
-<p>This model shows the total effect of price on satisfaction. If β₁ > 0, then higher-priced items tend to get higher rankings.</p>
+<h3 style="margin-top:40px;">Model 1: Original Model</h3>
+<table border="1" cellspacing="0" cellpadding="8" style="border-collapse:collapse; width:100%; margin:16px 0;">
+  <thead style="background-color:#f5f5f5;">
+    <tr>
+      <th>Equation</th>
+      <th>Interpretation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align:center;">Ranking = β₀ + β₁·Price</td>
+      <td>
+        This baseline model represents the <strong>total effect</strong> of product price on satisfaction.  
+        A positive <strong>β₁</strong> (β₁ > 0) indicates that higher-priced items tend to receive higher satisfaction rankings.  
+        However, since this model does not control for other variables (e.g., brand, category),  
+        <em>β₁ may capture both the true effect of price and hidden confounding influences.</em>
+      </td>
+    </tr>
+  </tbody>
+</table>
+ice on satisfaction. If β₁ > 0, then higher-priced items tend to get higher rankings.</p>
     <h3>Price-to-Ranking Calculator</h3>
     <img src="Calculator image.jpeg" alt="Calculator image" width="100" />
     <div style="margin: 32px auto; border: 1px solid #ddd; padding: 16px; border-radius: 8px; max-width:400px;">
